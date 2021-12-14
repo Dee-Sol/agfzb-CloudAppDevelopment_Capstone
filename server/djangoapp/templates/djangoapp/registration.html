@@ -6,6 +6,45 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
     <body>
-    <!--Add a registration form here -->
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealerships</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:about' %}">About Us</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">Contact Us</a>   
+                </div>
+            </div>
+        </nav>
+        <br>
+        <!--Add a registration form here -->
+         <form action="{% url 'djangoapp:registration' %}" method="post">
+            <div class="container">
+                {% csrf_token %}
+                <h1>Sign Up</h1>
+                <hr>
+                <div class="form-group">
+                    <label for="username"><b>User Name</b></label>
+                    <input type="text" class="form-control" placeholder="Username" name="username" required>
+                    <label for="firstname"><b>First Name</b></label>
+                    <input type="text" class="form-control" placeholder="First Name" name="firstname" required>
+                    <label for="lastname"><b>Last Name</b></label>
+                    <input type="text" class="form-control" placeholder="Last Name" name="lastname" required>
+                    <label for="psw"><b>Password</b></label>
+                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                    {% if message %}
+                    <div class="alert alert-warning">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                    <br>
+                    <button class="btn btn-dark" type="submit">Sign up</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="card-footer">
+            <a class="text-muted" href="{% url 'djangoapp:contact' %}">2021 Best Cars Dealership</a>
+        </div>
+
     </body>
 </html>
