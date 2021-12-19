@@ -47,11 +47,35 @@
             </div>
         </nav>
 
+        <br>
+
         <!--Add a dealer table here -->
+        {% if dealerships %}
+        <main class="container pt-6">
+            <h3>Dealerships</h3> 
+            <table class="table" id="table" data-filter-control='true'>
+                <thead>
+                    <tr>
+                        <th data-field="full_name">Dealer Name</th>
+                        <th data-field="city">City</th>
+                        <th data-field="state" data-filter-control='select'>State</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dealer in dealerships %}
+                        <tr>
+                            <td>{{dealer.full_name}}</td>
+                            <td>{{dealer.city}}</td>
+                            <td>{{dealer.st}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No dealerships are available at the moment. Something went wrong.</p>
 
+        {% endif %}
 
-
-        
         <br>
 
 
