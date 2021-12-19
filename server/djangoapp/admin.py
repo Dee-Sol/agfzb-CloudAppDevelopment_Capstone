@@ -7,7 +7,7 @@ from .models import CarMake, CarModel
 # CarModelInline class
 class CarModelInline(admin.StackedInline):
     model = CarModel
-    extra = 5
+    extra = 1
 
 # CarModelAdmin class
 class CarModelAdmin(admin.ModelAdmin):
@@ -16,14 +16,9 @@ class CarModelAdmin(admin.ModelAdmin):
     list_filter = ['name', 'type', 'year']
     search_fields = ['name', 'type', 'year']
 
-# CarMakeInline class
-class CarMakeInline(admin.StackedInline):
-    model = CarMake
-    extra = 3
-
 # CarMakeAdmin class
 class CarMakeAdmin(admin.ModelAdmin):
-#    inlines = [CarMakeInline]
+    inlines = [CarModelInline]
     list_display = ['name']
     list_filter = ['name']
     search_fields = ['name', 'description']
