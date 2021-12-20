@@ -8,11 +8,72 @@
 </head>
 
     <body>
+        <!-- Nav bar -->
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealerships</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:about' %}">About Us</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">Contact Us</a>
+                </div>
+                <!--User Login Fields -->
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a class="btn btn-dark" href="#">({{ user.username }})</a>
+                        <a class="btn btn-dark" href="{% url 'djangoapp:logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Username" name="username" >
+                                <input type="password" class="form-control" placeholder="Password" name="psw" >
+                                <button class="btn btn-secondary" type="submit">Login</button>
+                                <a class="btn btn-dark" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                            </div>
+                        </form>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
 
-    <!--Add a nav bar here -->
+        <!-- Add reviews as cards -->
+        {% if reviews %}
+        <main class="container pt-6">
+            <h3>Reviews</h3> 
+            <table class="table" id="table" data-filter-control='true'>
+                <thead>
+                    <tr>
+                        <th data-field="purchase_date">Purchase Date</th>
+                        <th data-field="review">Review</th>
+                        <th data-field="sentiment">Sentiment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for review in reviews %}
+                        <tr>
+                            <td>{{review.purchase_date}}</td>
+                            <td>{{review.review}}</td>
+                            <td>{{review.sentiment}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            {% else %}
+                <p>No reviews are available for this dealership. Something went wrong.</p>
+    
+        {% endif %}
 
-    <!-- Add reviews as cards -->
+        <br>
 
+        <!-- Footer -->
+        <footer class="bg-dark text-center fixed-bottom">
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                <a class="text-white" href="{% url 'djangoapp:contact' %}">2021 Best Cars Dealership</a>
+            </div>
+        </footer>
     </body>
 
 </html>
