@@ -67,6 +67,21 @@
         {% endif %}
 
         <br>
+        
+        <!-- Add a Review -->
+        <div class="card">
+            {% if user.is_authenticated %}
+            <div class="card-footer">
+                <a class="btn btn-dark" href="{% url 'djangoapp:add_review' dealerId %}">Add Review</a>
+            </div>
+            {% else %}
+            <div class="card-body">
+                Login to leave a review
+            </div>
+            {% endif %}
+        </div>
+        
+        <br>
 
         <!-- Footer -->
         <footer class="bg-dark text-center fixed-bottom">
