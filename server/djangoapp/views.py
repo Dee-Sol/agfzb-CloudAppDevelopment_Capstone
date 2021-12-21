@@ -116,6 +116,7 @@ def get_dealer_details(request, dealerId):
         reviews = get_dealer_reviews_from_cf(url, dealerId)
         context['reviews'] = reviews
         context['dealerId'] = dealerId
+        context['dealer'] = get_dealer_detail_infos(dealerId)
         return render(request, 'djangoapp/dealer_details.html', context)
 
 # Create a `add_review` view to submit a review
@@ -126,6 +127,7 @@ def add_review(request, dealerId):
     if request.method == 'GET':
         context['dealerId'] = dealerId
         context['cars'] = CarModel.objects.filter(dealerId=dealerId)
+        context['dealer'] = get_dealer_detail_infos(dealerId)
         return render(request, 'djangoapp/add_review.html', context)
 
     if request.method == "POST":
@@ -158,3 +160,8 @@ def add_review(request, dealerId):
             return redirect("djangoapp:dealer_details", dealerId=dealerId)
     else:
             return render(request, 'djangoapp/index.html', context)
+
+def get_dealer_detail_infos(dealerId):
+    url = "https://04b084a5.eu-gb.apigw.appdomain.cloud/dealership/api/dealership"
+    dealerships = get_dealers_from_cf(url)
+    return next(filter(lambda x: x.id == dealerId, dealerships))

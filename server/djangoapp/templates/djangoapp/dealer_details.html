@@ -39,35 +39,38 @@
                 </ul>
             </div>
         </nav>
-
+        <br>
         <!-- Add reviews as cards -->
-        {% if reviews %}
         <main class="container pt-6">
-            <h3>Reviews</h3> 
-            <table class="table" id="table" data-filter-control='true'>
-                <thead>
-                    <tr>
-                        <th data-field="purchase_date">Purchase Date</th>
-                        <th data-field="review">Review</th>
-                        <th data-field="sentiment">Sentiment</th>
-                    </tr>
-                </thead>
-                <tbody>
+        {% if reviews %}
+            <div class="container">
+                <h2>Reviews for {{dealer.full_name}}</h2>
+                <div class="card-columns">
                     {% for review in reviews %}
-                        <tr>
-                            <td>{{review.purchase_date}}</td>
-                            <td>{{review.review}}</td>
-                            <td>{{review.sentiment}}</td>
-                        </tr>
+                        <div class="card">
+                            {% if review.sentiment == 'positive' %}
+                                <img width="50" height="50" class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png">
+                            {% else %}
+                                {% if review.sentiment == 'negative' %}
+                                    <img width="50" height="50" class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png">
+                                {% else %}
+                                    <img width="50" height="50" class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png">
+                                {% endif %}
+                            {% endif %}
+                            <div class="card-body">
+                                <h4 class="card-title">{{review.car_make}}, {{review.car_model}}</h4>
+                                <h4 class="card-title">{{review.car_year}}</h4>
+                                <p class="card-text">{{review.review}}</p>
+                            </div>
+                        </div>
                     {% endfor %}
-                </tbody>
+                </div>
+            </div>
             {% else %}
                 <p>No reviews are available for this dealership. Something went wrong.</p>
-    
         {% endif %}
-
         <br>
-        
+
         <!-- Add a Review -->
         <div class="card">
             {% if user.is_authenticated %}
@@ -76,13 +79,13 @@
             </div>
             {% else %}
             <div class="card-body">
-                Login to leave a review
+                Login to leave a review for {{dealer.full_name}}
             </div>
             {% endif %}
         </div>
-        
+        </main> 
         <br>
-
+ 
         <!-- Footer -->
         <footer class="bg-dark text-center fixed-bottom">
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">

@@ -11,7 +11,6 @@
     <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
-
 </head>
 
     <body>
@@ -50,22 +49,28 @@
         <br>
 
         <!--Add a dealer table here -->
-        {% if dealerships %}
         <main class="container pt-6">
+        {% if dealerships %}
             <h3>Dealerships</h3> 
             <table class="table" id="table" data-filter-control='true'>
                 <thead>
                     <tr>
+                        <th data-field="id">ID</th>
                         <th data-field="full_name">Dealer Name</th>
                         <th data-field="city">City</th>
+                        <th data-field="address">Address</th>
+                        <th data-field="zip">Zip</th>
                         <th data-field="state" data-filter-control='select'>State</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for dealer in dealerships %}
                         <tr>
+                            <td>{{dealer.id}}</td>
                             <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</a></td>
                             <td>{{dealer.city}}</td>
+                            <td>{{dealer.address}}</td>
+                            <td>{{dealer.zip}}</td>
                             <td>{{dealer.st}}</td>
                         </tr>
                     {% endfor %}
@@ -75,9 +80,8 @@
             <p>No dealerships are available at the moment. Something went wrong.</p>
 
         {% endif %}
-
+        </main>
         <br>
-
 
         <!-- Footer -->
         <footer class="bg-dark text-center fixed-bottom">
@@ -87,5 +91,9 @@
         </footer>
 
     </body>
-
+    <script>
+        $(function() {
+          $('#table').bootstrapTable()
+        })
+      </script>
 </html>
