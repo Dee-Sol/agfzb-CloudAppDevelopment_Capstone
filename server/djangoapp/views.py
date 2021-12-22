@@ -84,9 +84,9 @@ def registration_request(request):
             # Create user in auth_user table
             user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
                                             password=password)
-            # Login the user and redirect to course list page
+            # Login the user and redirect to About page
             login(request, user)
-            return redirect("djangoapp/index.html")
+            return redirect("djangoapp:about")
         else:
             return render(request, 'djangoapp/index.html', context)
 
